@@ -72,4 +72,5 @@ class CustomerManagementApplicationTests {
         System.out.println(cusManagePageInfo);
     }
 
+// ok
 }
