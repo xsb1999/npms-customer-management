@@ -2,4 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neu.customermanagement.management.mapper.CustomerMapper">
 
+    <select id="getDeptInfoByEmpId" parameterType="String" resultType="DeptInfo">
+
+        select distinct dept_id, dept_name
+        from department, employee
+        <where>
+            emp_dept_id=dept_id
+            <if test="emp_id != null">
+                and emp_id=#{emp_id};
+            </if>
+        </where>
+
+    </select>
+
+
+
+    <select id="getEmpInfoByEmpIdAndDeptId" parameterType="String" resultType="EmpInfo">
+
+        select distinct emp_id, emp_name
+        from employee
+        <where>
+            emp_position_id = "30000030"
+            <if test="emp_id!=null">
+               and emp_id=#{emp_id}
+            </if>
+            <if test="dept_id!=null">
+                and emp_dept_id=#{dept_id}
+            </if>
+        </where>
+
+    </select>
+
+
+
+    <select id="getCusSearchResult" parameterType="String" resultType="CusSearchResult">
+
+        select distinct cus_id, cus_name, cus_product_type, cus_enterprise_property, cus_sales_dept_id, cus_customer_manager_id
+        from customer
+        <where>
+            <if test="emp_id!=null">
+                cus_customer_manager_id=#{emp_id}
+            </if>
+            <if test="dept_id!=null">
+                and cus_sales_dept_id=#{dept_id}
+            </if>
+        </where>
+
+    </select>
+
+
+
+
+
+
+
+
+
 </mapper>

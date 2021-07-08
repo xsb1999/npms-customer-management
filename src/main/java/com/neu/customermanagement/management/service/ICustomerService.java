@@ -1,5 +1,6 @@
 package com.neu.customermanagement.management.service;
 
+import com.neu.customermanagement.management.dto.CusManagePageInfo;
 import com.neu.customermanagement.management.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-07-07
  */
 public interface ICustomerService extends IService<Customer> {
+
+    public CusManagePageInfo getCusManagePageInfo(String emp_id, String emp_position);
 
 }

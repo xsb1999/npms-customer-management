@@ -15,7 +15,7 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:com/neu/customermanagement/management/mapper/*.xml
-  type-aliases-package: com.neu.customermanagement.management.entity
+  type-aliases-package: com.neu.customermanagement.management.entity, com.neu.customermanagement.management.dto
 
 
 logging:
