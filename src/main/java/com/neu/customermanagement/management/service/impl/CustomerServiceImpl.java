@@ -1,10 +1,11 @@
 package com.neu.customermanagement.management.service.impl;
 
-import com.neu.customermanagement.management.dto.CusManagePageInfo;
-import com.neu.customermanagement.management.dto.CusSearchResult;
-import com.neu.customermanagement.management.dto.DeptInfo;
-import com.neu.customermanagement.management.dto.EmpInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.neu.customermanagement.management.dto.*;
+import com.neu.customermanagement.management.entity.Contact;
 import com.neu.customermanagement.management.entity.Customer;
+import com.neu.customermanagement.management.mapper.ContactMapper;
 import com.neu.customermanagement.management.mapper.CustomerMapper;
 import com.neu.customermanagement.management.mapper.EmployeeMapper;
 import com.neu.customermanagement.management.service.ICustomerService;
@@ -30,7 +31,8 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     CustomerMapper customerMapper;
     @Autowired
     EmployeeMapper employeeMapper;
-
+    @Autowired
+    ContactMapper contactMapper;
 
     @Override
     public CusManagePageInfo getCusManagePageInfo(String emp_id, String emp_position) {
@@ -100,5 +102,42 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         cusManagePageInfo.setCusSearchResultList(cusSearchResultList);
 
         return cusManagePageInfo;
+    }
+
+    @Override
+    public List<EmpInfo> getEmpByDept(String dept_id) {
+
+        return customerMapper.getEmpByDept(dept_id);
+    }
+
+    @Override
+    public CusDetail getCusDetail(String cus_id) {
+
+        Customer customer = null;
+        List<Contact> contactList = new ArrayList<>();
+        List<Relation> relationList = new ArrayList<>();
+        String cus_name = customerMapper.getCusNameByCusId(cus_id);
+
+        // 获取客户基本信息
+        customer = customerMapper.selectById(cus_id);
+
+        // 获取客户联系人信息
+        QueryWrapper<Contact> qw = Wrappers.query();
+        qw.eq("con_customer_id", cus_id);
+        contactList = contactMapper.selectList(qw);
+
+        // 获取客户关联客户信息
+        relationList = customerMapper.getRelationByCusId(cus_id);
+        for (Relation relation : relationList) {
+            relation.setCusrelCusName(cus_name);
+            relation.setCusrelCusRelatedCusName(customerMapper.getCusNameByCusId(relation.getCusrelCusRelatedCusId()));
+        }
+
+        CusDetail cusDetail = new CusDetail();
+        cusDetail.setCustomer(customer);
+        cusDetail.setContactList(contactList);
+        cusDetail.setRelationList(relationList);
+
+        return cusDetail;
     }
 }

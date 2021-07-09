@@ -22,7 +22,7 @@
         select distinct emp_id, emp_name
         from employee
         <where>
-            emp_position_id = "30000030"
+            emp_position_id in ("30000030","30000010")
             <if test="emp_id!=null">
                and emp_id=#{emp_id}
             </if>
@@ -52,7 +52,27 @@
 
 
 
+    <select id="getEmpByDept" parameterType="String" resultType="EmpInfo">
+        select distinct emp_id, emp_name
+        from employee
+        where emp_position_id = "30000030" and emp_dept_id=#{dept_id}
+    </select>
 
+
+
+    <select id="getRelationByCusId" parameterType="String" resultType="Relation">
+
+        select cusrel_cus_id, cusrel_cus_related_cus_id, cusrel_relation
+        from customer_related
+        where cusrel_cus_id=#{cus_id}
+
+    </select>
+
+
+
+    <select id="getCusNameByCusId" parameterType="String" resultType="String">
+        select cus_name from customer where cus_id=#{cus_id}
+    </select>
 
 
 

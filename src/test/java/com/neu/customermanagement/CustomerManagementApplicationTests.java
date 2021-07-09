@@ -1,9 +1,14 @@
 package com.neu.customermanagement;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.neu.customermanagement.management.dto.CusManagePageInfo;
 import com.neu.customermanagement.management.dto.DeptInfo;
 import com.neu.customermanagement.management.dto.EmpInfo;
 import com.neu.customermanagement.management.dto.Role;
+import com.neu.customermanagement.management.entity.Contact;
+import com.neu.customermanagement.management.entity.Customer;
+import com.neu.customermanagement.management.mapper.ContactMapper;
 import com.neu.customermanagement.management.mapper.CustomerMapper;
 import com.neu.customermanagement.management.mapper.EmployeeMapper;
 import com.neu.customermanagement.management.service.ICustomerService;
@@ -33,6 +38,9 @@ class CustomerManagementApplicationTests {
 
     @Autowired
     ICustomerService iCustomerService;
+
+    @Autowired
+    ContactMapper contactMapper;
 
 
 
@@ -72,5 +80,43 @@ class CustomerManagementApplicationTests {
         System.out.println(cusManagePageInfo);
     }
 
-// ok
+    @Test
+    public void test7(){
+        List<EmpInfo> empInfoList = iCustomerService.getEmpByDept("8021140");
+        System.out.println(empInfoList);
+    }
+
+    @Test
+    public void test8(){
+        QueryWrapper<Contact> qw = Wrappers.query();
+        qw.eq("con_customer_id", "800001");
+        List<Contact> contactList = contactMapper.selectList(qw);
+        System.out.println(contactList);
+    }
+
+    @Test
+    public void test9(){
+        System.out.println(customerMapper.getRelationByCusId("800001"));
+    }
+
+    @Test
+    public void test10(){
+        System.out.println(customerMapper.getCusNameByCusId("800001"));
+    }
+
+    @Test
+    public void test11(){
+        System.out.println(iCustomerService.getCusDetail("800001"));
+    }
+
+    @Test
+    public void test12(){
+        System.out.println(customerMapper.getEmpInfoByEmpIdAndDeptId(null,"8021140"));
+    }
+
+    @Test
+    public void test13(){
+        System.out.println(iCustomerService.getCusManagePageInfo("800125","30000010"));
+    }
+
 }
