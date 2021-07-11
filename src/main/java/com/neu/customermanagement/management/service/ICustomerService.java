@@ -1,8 +1,7 @@
 package com.neu.customermanagement.management.service;
 
-import com.neu.customermanagement.management.dto.CusDetail;
-import com.neu.customermanagement.management.dto.CusManagePageInfo;
-import com.neu.customermanagement.management.dto.EmpInfo;
+import com.neu.customermanagement.management.dto.*;
+import com.neu.customermanagement.management.dto.common.EmpInfo;
 import com.neu.customermanagement.management.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -26,5 +25,19 @@ public interface ICustomerService extends IService<Customer> {
 
     // 点击客户编号展示客户详细信息
     public CusDetail getCusDetail(String cus_id);
+
+    // 客户查询
+    public List<CusSearchResult> getCustomers(CusSearchCondition searchCondition);
+
+    // 客户新增
+    public String addCustomers(AddCustomerInfo addCustomerInfo);
+
+    // 客户修改
+    public String updateCustomers(UpdateCustomerInfo updateCustomerInfo);
+
+
+
+
+
 
 }

@@ -17,4 +17,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContactMapper extends BaseMapper<Contact> {
 
+    public int updateContacts (Contact contact);
+
 }

@@ -2,7 +2,7 @@ package com.neu.customermanagement.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.neu.customermanagement.management.dto.RespBean;
+import com.neu.customermanagement.management.dto.common.RespBean;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

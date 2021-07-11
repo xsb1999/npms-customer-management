@@ -55,7 +55,7 @@
     <select id="getEmpByDept" parameterType="String" resultType="EmpInfo">
         select distinct emp_id, emp_name
         from employee
-        where emp_position_id = "30000030" and emp_dept_id=#{dept_id}
+        where emp_position_id in ("30000030","30000010") and emp_dept_id=#{dept_id}
     </select>
 
 
@@ -76,6 +76,74 @@
 
 
 
+    <select id="getCustomers" parameterType="CusSearchCondition" resultType="CusSearchResult">
+
+        select cus_id, cus_name, cus_product_type, cus_enterprise_property, cus_sales_dept_id, cus_customer_manager_id
+        from customer
+        <where>
+            <if test="cusId != null">
+                cus_id = #{cusId}
+            </if>
+            <if test="cusName != null">
+                and cus_name = #{cusName}
+            </if>
+            <if test="cusEnterpriseProperty != null">
+                and cus_enterprise_property = #{cusEnterpriseProperty}
+            </if>
+            <if test="cusSalesDeptId != null">
+                and cus_sales_dept_id = #{cusSalesDeptId}
+            </if>
+            <if test="cusCustomerManagerId != null">
+                and cus_customer_manager_id = #{cusCustomerManagerId}
+            </if>
+        </where>
+
+    </select>
+
+
+
+    <select id="findMaxCusId" resultType="String">
+        SELECT MAX(cus_id) from customer;
+    </select>
+
+
+
+    <insert id="addCusRelated" parameterType="Relation">
+        insert into customer_related (cusrel_cus_id, cusrel_cus_related_cus_id, cusrel_relation)
+        values (#{cusrelCusId}, #{cusrelCusRelatedCusId}, #{cusrelRelation});
+    </insert>
+
+
+
+    <select id="judgeMultiFather1" parameterType="String" resultType="Integer">
+        select count(*)
+        from customer_related c1, customer_related c2
+        where c1.cusrel_cus_related_cus_id = c2.cusrel_cus_id
+        and c1.cusrel_cus_id=#{cus_id_son} and c2.cusrel_cus_related_cus_id=#{cus_id_father}
+    </select>
+
+
+
+    <select id="judgeMultiFather2" parameterType="String" resultType="Integer">
+        select count(*) from customer_related
+        where (cusrel_cus_id = #{cus_id1} and cusrel_cus_related_cus_id = #{cus_id2})
+        or (cusrel_cus_id = #{cus_id2} and cusrel_cus_related_cus_id = #{cus_id1})
+    </select>
+
+
+
+    <select id="judgeTaxId" parameterType="String" resultType="Integer">
+        select count(*) from customer where cus_taxpayer_id=#{tax_id}
+    </select>
+
+
+    <delete id="deleteRelByIds" parameterType="String">
+        delete from customer_related where cusrel_cus_id=#{id1} and cusrel_cus_related_cus_id=#{id2}
+    </delete>
+
+    <delete id="deleteConByNameAndId" parameterType="String">
+        delete from contact where con_customer_id=#{cus_id} and con_name=#{con_name}
+    </delete>
 
 
 </mapper>

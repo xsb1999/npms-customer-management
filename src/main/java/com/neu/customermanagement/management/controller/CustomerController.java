@@ -1,19 +1,14 @@
 package com.neu.customermanagement.management.controller;
 
 
-import com.neu.customermanagement.management.dto.CusDetail;
-import com.neu.customermanagement.management.dto.CusManagePageInfo;
-import com.neu.customermanagement.management.dto.DeptInfo;
-import com.neu.customermanagement.management.dto.EmpInfo;
+import com.neu.customermanagement.management.dto.*;
+import com.neu.customermanagement.management.dto.common.DeptInfo;
+import com.neu.customermanagement.management.dto.common.EmpInfo;
 import com.neu.customermanagement.management.entity.Customer;
 import com.neu.customermanagement.management.entity.Employee;
 import com.neu.customermanagement.management.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,6 +47,26 @@ public class CustomerController {
         String cus_id = customer.getCusId();
         return iCustomerService.getCusDetail(cus_id);
     }
+
+    // 客户查询
+    @GetMapping("getCustomers")
+    public List<CusSearchResult> getCustomers(@RequestBody CusSearchCondition condition){
+        return iCustomerService.getCustomers(condition);
+    }
+
+    // 客户新增
+    @PostMapping("addCustomers")
+    public String addCustomers(@RequestBody AddCustomerInfo addCustomerInfo){
+        return iCustomerService.addCustomers(addCustomerInfo);
+    }
+
+    // 客户修改
+    @PostMapping("updateCustomers")
+    public String updateCustomers(@RequestBody UpdateCustomerInfo updateCustomerInfo){
+        return iCustomerService.updateCustomers(updateCustomerInfo);
+    }
+
+
 
 }
 

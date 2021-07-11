@@ -1,5 +1,8 @@
 package com.neu.customermanagement.management.dto;
 
+import com.neu.customermanagement.management.dto.common.DeptInfo;
+import com.neu.customermanagement.management.dto.common.EmpInfo;
+
 import java.io.Serializable;
 import java.util.List;
 

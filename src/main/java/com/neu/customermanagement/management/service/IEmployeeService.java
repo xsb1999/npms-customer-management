@@ -1,6 +1,6 @@
 package com.neu.customermanagement.management.service;
 
-import com.neu.customermanagement.management.dto.Role;
+import com.neu.customermanagement.management.dto.common.Role;
 import com.neu.customermanagement.management.entity.Employee;
 import com.baomidou.mybatisplus.extension.service.IService;
 

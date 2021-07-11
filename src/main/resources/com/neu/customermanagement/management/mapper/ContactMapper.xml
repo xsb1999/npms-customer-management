@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neu.customermanagement.management.mapper.ContactMapper">
 
+    <update id="updateContacts" parameterType="Contact">
+        update contact set
+            con_dept = #{conDept},
+            con_role = #{conRole},
+            con_landline_phone = #{conLandlinePhone},
+            con_mobile_phone = #{conMobilePhone},
+            con_fax = #{conFax},
+            con_email = #{conEmail},
+            con_qq = #{conQq},
+            con_wechat = #{conWechat}
+        where con_customer_id=#{conCustomerId} and con_name=#{conName}
+
+    </update>
+
 </mapper>

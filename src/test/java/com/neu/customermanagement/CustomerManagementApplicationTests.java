@@ -2,10 +2,12 @@ package com.neu.customermanagement;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.neu.customermanagement.management.dto.AddCustomerInfo;
 import com.neu.customermanagement.management.dto.CusManagePageInfo;
-import com.neu.customermanagement.management.dto.DeptInfo;
-import com.neu.customermanagement.management.dto.EmpInfo;
-import com.neu.customermanagement.management.dto.Role;
+import com.neu.customermanagement.management.dto.common.DeptInfo;
+import com.neu.customermanagement.management.dto.common.EmpInfo;
+import com.neu.customermanagement.management.dto.common.Relation;
+import com.neu.customermanagement.management.dto.common.Role;
 import com.neu.customermanagement.management.entity.Contact;
 import com.neu.customermanagement.management.entity.Customer;
 import com.neu.customermanagement.management.mapper.ContactMapper;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -118,5 +121,107 @@ class CustomerManagementApplicationTests {
     public void test13(){
         System.out.println(iCustomerService.getCusManagePageInfo("800125","30000010"));
     }
+
+
+    @Test
+    public void test15(){
+        System.out.println(customerMapper.findMaxCusId());
+    }
+
+
+    @Test
+    public void test16(){
+        Customer customer = new Customer();
+        customer.setCusName("hhhhh");
+        customer.setCusId("800007");
+        customer.setCusTaxpayerId("1001");
+        int s = 100;
+        try {
+            s = customerMapper.insert(customer);
+        }catch (Exception exception){
+            System.out.println("===================");
+            System.out.println(s);
+        }
+
+
+    }
+
+    @Test
+    public void test17(){
+        Contact contact = new Contact();
+        contact.setConCustomerId("800006");
+        contact.setConName("hello sir2");
+        contactMapper.insert(contact);
+    }
+
+
+    @Test
+    public void test18(){
+        Customer customer = new Customer();
+        customer.setCusTaxpayerId("9999");
+        customer.setCusName("NBL");
+
+        List<Contact> contactList = new ArrayList<>();
+        Contact contact = new Contact();
+        contact.setConName("David");
+        contactList.add(contact);
+
+        List<Relation> relationList = new ArrayList<>();
+        Relation relation = new Relation();
+        relation.setCusrelCusRelatedCusId("100001");
+        relation.setCusrelRelation("20");
+        relationList.add(relation);
+
+        AddCustomerInfo addCustomerInfo = new AddCustomerInfo();
+        addCustomerInfo.setCustomer(customer);
+        addCustomerInfo.setContactList(contactList);
+        addCustomerInfo.setRelationList(relationList);
+
+        System.out.println(iCustomerService.addCustomers(addCustomerInfo));
+
+    }
+
+
+    @Test
+    public void test19(){
+        System.out.println(customerMapper.judgeMultiFather1("800009","800001"));
+    }
+
+
+    @Test
+    public void test20(){
+        List<String> relationList = new ArrayList<>();
+        relationList.add("1");
+        relationList.add("2");
+        relationList.add("3");
+        for (int i = 0; i < relationList.size(); i++) {
+            for (int j = i+1; j < relationList.size(); j++) {
+                System.out.println(relationList.get(i)+"---"+relationList.get(j));
+            }
+        }
+    }
+
+
+    @Test
+    public void test21(){
+        Customer customer = new Customer();
+        customer.setCusId("800006");
+        customer.setCusAddress("Beijing street001");
+        customerMapper.updateById(customer);
+    }
+
+    @Test
+    public void test22(){
+        System.out.println(customerMapper.deleteRelByIds("800009","800008"));
+    }
+
+
+
+
+
+
+
+
+
 
 }

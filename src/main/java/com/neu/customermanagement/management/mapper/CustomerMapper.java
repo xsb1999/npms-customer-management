@@ -1,6 +1,9 @@
 package com.neu.customermanagement.management.mapper;
 
 import com.neu.customermanagement.management.dto.*;
+import com.neu.customermanagement.management.dto.common.DeptInfo;
+import com.neu.customermanagement.management.dto.common.EmpInfo;
+import com.neu.customermanagement.management.dto.common.Relation;
 import com.neu.customermanagement.management.entity.Customer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -37,5 +40,29 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     // 根据客户id查询客户名称
     public String getCusNameByCusId(String cus_id);
+
+    // 客户查询
+    public List<CusSearchResult> getCustomers(CusSearchCondition searchCondition);
+
+    // 在数据库中查询得到目前最大的客户id
+    public String findMaxCusId();
+
+    // insert到关联客户表
+    public int addCusRelated(Relation relation);
+
+    // 判断纳税人识别号是否唯一
+    public int judgeTaxId(String tax_id);
+
+    // 判断关联客户是否只录入了当前客户的父节点，不可关联多级父节点(针对于查询新增或修改的一对关系中，当前客户和关联客户的引入是否会关联多级父节点)
+    public int judgeMultiFather1(String cus_id_son, String cus_id_father);
+
+    // 判断关联客户是否只录入了当前客户的父节点，不可关联多级父节点(针对于查询新增或修改的一对关系中，关联客户之间的引入是否会关联多级父节点)
+    public int judgeMultiFather2(String cus_id1, String cus_id2);
+
+    // 删除关联客户
+    public int deleteRelByIds(String id1, String id2);
+
+    // 删除客户联系人（通过客户id和客户联系人姓名）
+    public int deleteConByNameAndId(String cus_id, String con_name);
 
 }

@@ -1,6 +1,6 @@
 package com.neu.customermanagement.management.mapper;
 
-import com.neu.customermanagement.management.dto.Role;
+import com.neu.customermanagement.management.dto.common.Role;
 import com.neu.customermanagement.management.entity.Employee;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

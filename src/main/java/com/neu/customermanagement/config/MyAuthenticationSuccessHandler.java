@@ -1,7 +1,7 @@
 package com.neu.customermanagement.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.neu.customermanagement.management.dto.RespBean;
+import com.neu.customermanagement.management.dto.common.RespBean;
 import com.neu.customermanagement.management.entity.Employee;
 import com.neu.customermanagement.management.service.IEmployeeService;
 import com.neu.customermanagement.util.SpringUtil;

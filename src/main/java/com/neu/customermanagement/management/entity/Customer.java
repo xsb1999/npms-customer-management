@@ -198,27 +198,31 @@ public class Customer implements Serializable {
         this.cusStatus = cusStatus;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
-        "cusId=" + cusId +
-        ", cusName=" + cusName +
-        ", cusCountry=" + cusCountry +
-        ", cusCity=" + cusCity +
-        ", cusAddress=" + cusAddress +
-        ", cusPostcode=" + cusPostcode +
-        ", cusWebsite=" + cusWebsite +
-        ", cusTaxpayerId=" + cusTaxpayerId +
-        ", cusTaxCategory=" + cusTaxCategory +
-        ", cusAccountAllocationSection=" + cusAccountAllocationSection +
-        ", cusEnterpriseProperty=" + cusEnterpriseProperty +
-        ", cusAnnualSalesRevenue=" + cusAnnualSalesRevenue +
-        ", cusProductType=" + cusProductType +
-        ", cusSoftwareBrand=" + cusSoftwareBrand +
-        ", cusEffectOfInformationization=" + cusEffectOfInformationization +
-        ", cusSalesDeptId=" + cusSalesDeptId +
-        ", cusCustomerManagerId=" + cusCustomerManagerId +
-        ", cusStatus=" + cusStatus +
-        "}";
+                "cusId='" + cusId + '\'' +
+                ", cusName='" + cusName + '\'' +
+                ", cusCountry='" + cusCountry + '\'' +
+                ", cusCity='" + cusCity + '\'' +
+                ", cusAddress='" + cusAddress + '\'' +
+                ", cusPostcode='" + cusPostcode + '\'' +
+                ", cusWebsite='" + cusWebsite + '\'' +
+                ", cusTaxpayerId='" + cusTaxpayerId + '\'' +
+                ", cusTaxCategory='" + cusTaxCategory + '\'' +
+                ", cusAccountAllocationSection='" + cusAccountAllocationSection + '\'' +
+                ", cusEnterpriseProperty='" + cusEnterpriseProperty + '\'' +
+                ", cusAnnualSalesRevenue=" + cusAnnualSalesRevenue +
+                ", cusProductType='" + cusProductType + '\'' +
+                ", cusSoftwareBrand='" + cusSoftwareBrand + '\'' +
+                ", cusEffectOfInformationization='" + cusEffectOfInformationization + '\'' +
+                ", cusSalesDeptId='" + cusSalesDeptId + '\'' +
+                ", cusCustomerManagerId='" + cusCustomerManagerId + '\'' +
+                ", cusStatus='" + cusStatus + '\'' +
+                '}';
     }
 }

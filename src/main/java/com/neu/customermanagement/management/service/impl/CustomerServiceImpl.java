@@ -3,6 +3,9 @@ package com.neu.customermanagement.management.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.neu.customermanagement.management.dto.*;
+import com.neu.customermanagement.management.dto.common.DeptInfo;
+import com.neu.customermanagement.management.dto.common.EmpInfo;
+import com.neu.customermanagement.management.dto.common.Relation;
 import com.neu.customermanagement.management.entity.Contact;
 import com.neu.customermanagement.management.entity.Customer;
 import com.neu.customermanagement.management.mapper.ContactMapper;
@@ -10,8 +13,13 @@ import com.neu.customermanagement.management.mapper.CustomerMapper;
 import com.neu.customermanagement.management.mapper.EmployeeMapper;
 import com.neu.customermanagement.management.service.ICustomerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,4 +148,146 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
         return cusDetail;
     }
+
+    @Override
+    public List<CusSearchResult> getCustomers(CusSearchCondition searchCondition) {
+        List<CusSearchResult> cusSearchResults = customerMapper.getCustomers(searchCondition);
+        for (CusSearchResult csr : cusSearchResults) {
+            // 通过员工id获取姓名
+            csr.setCusSalesDeptName(employeeMapper.getDeptNameById(csr.getCusSalesDeptId()));
+            // 通过部门id获取部门名称
+            csr.setCusCustomerManagerName(employeeMapper.getEmpNameById(csr.getCusCustomerManagerId()));
+        }
+        return cusSearchResults;
+    }
+
+
+    @Override
+    @Transactional(rollbackFor=Exception.class)
+    public String addCustomers(AddCustomerInfo addCustomerInfo) {
+        Customer customer = addCustomerInfo.getCustomer();
+        List<Contact> contactList = addCustomerInfo.getContactList();
+        List<Relation> relationList = addCustomerInfo.getRelationList();
+
+        // 判断纳税人识别号是否唯一
+        if (customer.getCusTaxpayerId()!=null && customerMapper.judgeTaxId(customer.getCusTaxpayerId()) > 0){
+            return "纳税人识别号重复！";
+        }
+
+        // 生成一个6位的客户id，首位为1
+        // 去数据库中查询得到目前最大的id并加1，得到这个新客户的id（类似于实现了一个varchar的自增）
+        String cus_id_max = customerMapper.findMaxCusId();
+        String cus_id = Integer.parseInt(cus_id_max)+1+"";
+
+        customer.setCusId(cus_id);
+        for (Contact contact : contactList) {
+            contact.setConCustomerId(cus_id);
+        }
+        for (Relation relation : relationList) {
+            relation.setCusrelCusId(cus_id);
+        }
+
+        // 判断关联客户是否只录入了当前客户的父节点，不可关联多级父节点
+        for (int i = 0; i < relationList.size(); i++) {
+            for (int j = i+1; j < relationList.size(); j++) {
+                int k = customerMapper.judgeMultiFather2(relationList.get(i).getCusrelCusRelatedCusId(),relationList.get(j).getCusrelCusRelatedCusId());
+                if (k > 0) {
+                    // 关联客户关联了多级父节点，不进行insert操作
+                    return "不允许关联多级父节点！";
+                }
+            }
+        }
+
+        // 各项信息填写正确，进行insert操作
+        try {
+            // insert到客户表
+            customerMapper.insert(customer);
+            // insert到客户联系人表
+            for (Contact c : contactList) {
+                contactMapper.insert(c);
+            }
+            // insert到关联客户表
+            for (Relation r : relationList) {
+                customerMapper.addCusRelated(r);
+            }
+        }catch (Exception e){
+            System.out.println("insert fail!");
+            throw e;
+        }
+        System.out.println("insert success!");
+        return "客户新增成功！";
+    }
+
+
+    @Override
+    @Transactional(rollbackFor=Exception.class)
+    public String updateCustomers(UpdateCustomerInfo updateCustomerInfo) {
+        Customer customer = updateCustomerInfo.getCustomer();
+        List<Contact> addContactsList = updateCustomerInfo.getAddContactsList();
+        List<Contact> updateContactsList = updateCustomerInfo.getUpdateContactsList();
+        List<String> deleteContactsName = updateCustomerInfo.getDeleteContactsName();
+        List<Relation> addRelationList = updateCustomerInfo.getAddRelationList();
+        List<String> deleteRelationCusId = updateCustomerInfo.getDeleteRelationCusId();
+
+        // 冻结状态不能修改和删除客户联系人信息
+        if (!customer.getCusStatus().equals("10")){
+            return "冻结状态不能修改和删除客户联系人信息!";
+        }
+
+        // 删除关联客户
+        for (String s : deleteRelationCusId) {
+            customerMapper.deleteRelByIds(customer.getCusId(), s);
+        }
+
+        // 判断关联客户是否只录入了当前客户的父节点，不可关联多级父节点
+        for (int i = 0; i < addRelationList.size(); i++) {
+            for (int j = i+1; j < addRelationList.size(); j++) {
+                int k = customerMapper.judgeMultiFather2(addRelationList.get(i).getCusrelCusRelatedCusId(),addRelationList.get(j).getCusrelCusRelatedCusId());
+                if (k > 0) {
+                    // 关联客户关联了多级父节点，不进行insert操作
+                    return "不允许关联多级父节点！";
+                }
+            }
+        }
+        for (Relation rel : addRelationList) {
+            int k = customerMapper.judgeMultiFather1(rel.getCusrelCusId(), rel.getCusrelCusRelatedCusId());
+            if (k > 0) {
+                // 关联客户关联了多级父节点，不进行insert操作
+                return "不允许关联多级父节点！";
+            }
+        }
+
+        try{
+            // update 客户基本信息
+            customerMapper.updateById(customer);
+            // 新增客户联系人
+            for (Contact contact : addContactsList) {
+                contact.setConCustomerId(customer.getCusId());
+                contactMapper.insert(contact);
+            }
+            // delete 客户联系人
+            for (String s : deleteContactsName) {
+                customerMapper.deleteConByNameAndId(customer.getCusId(), s);
+            }
+            // update 客户联系人(by 客户id 和 name)
+            for (Contact contact : updateContactsList) {
+                contact.setConCustomerId(customer.getCusId());
+                contactMapper.updateContacts(contact);
+            }
+            // 新增关联客户
+            for (Relation relation : addRelationList) {
+                relation.setCusrelCusId(customer.getCusId());
+                customerMapper.addCusRelated(relation);
+            }
+
+        }catch (Exception e){
+            System.out.println("update fail!");
+            throw e;
+        }
+
+        System.out.println("update success!");
+        return "客户修改成功！";
+    }
+
+
 }
