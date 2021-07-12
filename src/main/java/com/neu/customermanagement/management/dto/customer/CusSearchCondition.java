@@ -1,6 +1,8 @@
-package com.neu.customermanagement.management.dto;
+package com.neu.customermanagement.management.dto.customer;
 
-public class CusSearchCondition {
+import java.io.Serializable;
+
+public class CusSearchCondition implements Serializable {
     private String cusName;
     private String cusId;
     private String cusEnterpriseProperty;

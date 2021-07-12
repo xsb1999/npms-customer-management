@@ -2,10 +2,10 @@ package com.neu.customermanagement.management.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.neu.customermanagement.management.dto.*;
 import com.neu.customermanagement.management.dto.common.DeptInfo;
 import com.neu.customermanagement.management.dto.common.EmpInfo;
 import com.neu.customermanagement.management.dto.common.Relation;
+import com.neu.customermanagement.management.dto.customer.*;
 import com.neu.customermanagement.management.entity.Contact;
 import com.neu.customermanagement.management.entity.Customer;
 import com.neu.customermanagement.management.mapper.ContactMapper;
@@ -13,12 +13,8 @@ import com.neu.customermanagement.management.mapper.CustomerMapper;
 import com.neu.customermanagement.management.mapper.EmployeeMapper;
 import com.neu.customermanagement.management.service.ICustomerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.ibatis.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionManager;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;

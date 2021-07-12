@@ -2,19 +2,22 @@ package com.neu.customermanagement;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.neu.customermanagement.management.dto.AddCustomerInfo;
-import com.neu.customermanagement.management.dto.CusManagePageInfo;
+import com.neu.customermanagement.management.dto.customer.AddCustomerInfo;
+import com.neu.customermanagement.management.dto.customer.CusManagePageInfo;
 import com.neu.customermanagement.management.dto.common.DeptInfo;
 import com.neu.customermanagement.management.dto.common.EmpInfo;
 import com.neu.customermanagement.management.dto.common.Relation;
 import com.neu.customermanagement.management.dto.common.Role;
 import com.neu.customermanagement.management.entity.Contact;
 import com.neu.customermanagement.management.entity.Customer;
+import com.neu.customermanagement.management.entity.Handoverlog;
 import com.neu.customermanagement.management.mapper.ContactMapper;
 import com.neu.customermanagement.management.mapper.CustomerMapper;
 import com.neu.customermanagement.management.mapper.EmployeeMapper;
+import com.neu.customermanagement.management.mapper.HandoverlogMapper;
 import com.neu.customermanagement.management.service.ICustomerService;
 import com.neu.customermanagement.management.service.IEmployeeService;
+import com.neu.customermanagement.management.service.IHandoverlogService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +48,11 @@ class CustomerManagementApplicationTests {
     @Autowired
     ContactMapper contactMapper;
 
+    @Autowired
+    HandoverlogMapper handoverlogMapper;
+
+    @Autowired
+    IHandoverlogService iHandoverlogService;
 
 
     @Test
@@ -226,13 +234,30 @@ class CustomerManagementApplicationTests {
         System.out.println(iCustomerService.getCustomerByName("CBA"));
     }
 
-
-
     @Test
     public void test25(){
         int k = customerMapper.judgeMultiFather1("800009", "800002");
         System.out.println(k);
     }
+
+    @Test
+    public void test26(){
+        System.out.println(handoverlogMapper.getAllDept());
+        System.out.println(handoverlogMapper.getAllEmp());
+    }
+
+    @Test
+    public void test27(){
+        Handoverlog handoverlog = new Handoverlog();
+        handoverlog.sethCusId("800001");
+        handoverlog.sethOppId("20210004");
+        handoverlog.sethOutCusManagerId("800123");
+        handoverlog.sethInCusManagerId("800124");
+        handoverlogMapper.insert(handoverlog);
+    }
+
+
+
 
 
 }

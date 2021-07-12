@@ -1,4 +1,4 @@
-package com.neu.customermanagement.management.dto;
+package com.neu.customermanagement.management.dto.customer;
 
 import java.io.Serializable;
 

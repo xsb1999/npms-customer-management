@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.customermanagement.management.mapper.HandoverlogMapper">
+
+
+    <select id="getAllDept" resultType="DeptInfo">
+        select dept_id, dept_name
+        from department, employee
+        where dept_id = emp_dept_id;
+    </select>
+
+
+    <select id="getAllEmp" resultType="EmpInfo">
+        select emp_id, emp_name from employee
+        where emp_position_id in ('30000010','30000030');
+    </select>
+
+
+    <select id="searchOutCusInfo" parameterType="HandoverInfoSearch" resultType="Customer">
+        select * from customer
+        <where>
+            <if test="cusName != null">
+                cus_name=#{cusName}
+            </if>
+            <if test="cusSalesDeptId != null">
+                and cus_sales_dept_id=#{cusSalesDeptId}
+            </if>
+            <if test="cusCustomerManagerId != null">
+                and cus_customer_manager_id=#{cusCustomerManagerId}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getCompetitorsByOppId" parameterType="String" resultType="Competitor">
+        select * from competitor where comp_opp_id = #{opp_id};
+    </select>
+
+
+    <select id="getOppById" parameterType="String" resultType="OpportunityBasicInfo">
+        select opp_id, opp_name, opp_sign_time, opp_belonging, opp_phase, opp_background, opp_cus_id, cus_name
+        from opportunity, customer
+        where cus_id = opp_cus_id and opp_id = #{opp_id};
+    </select>
+
+
+
+
+
+
+
+
+</mapper>

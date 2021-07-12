@@ -1,4 +1,4 @@
-package com.neu.customermanagement.management.dto;
+package com.neu.customermanagement.management.dto.customer;
 
 import com.neu.customermanagement.management.dto.common.DeptInfo;
 import com.neu.customermanagement.management.dto.common.EmpInfo;

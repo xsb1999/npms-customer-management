@@ -1,7 +1,7 @@
 package com.neu.customermanagement.management.service;
 
-import com.neu.customermanagement.management.dto.*;
 import com.neu.customermanagement.management.dto.common.EmpInfo;
+import com.neu.customermanagement.management.dto.customer.*;
 import com.neu.customermanagement.management.entity.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
 

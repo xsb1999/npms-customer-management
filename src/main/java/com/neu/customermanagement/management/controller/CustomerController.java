@@ -1,9 +1,9 @@
 package com.neu.customermanagement.management.controller;
 
 
-import com.neu.customermanagement.management.dto.*;
 import com.neu.customermanagement.management.dto.common.DeptInfo;
 import com.neu.customermanagement.management.dto.common.EmpInfo;
+import com.neu.customermanagement.management.dto.customer.*;
 import com.neu.customermanagement.management.entity.Customer;
 import com.neu.customermanagement.management.entity.Employee;
 import com.neu.customermanagement.management.service.ICustomerService;
@@ -100,6 +100,11 @@ public class CustomerController {
     }
 
 
+    // 导出
+    @GetMapping("export")
+    public String export(){
+        return "导出成功！";
+    }
 
 
 }

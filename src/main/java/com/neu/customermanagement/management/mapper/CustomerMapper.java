@@ -1,9 +1,10 @@
 package com.neu.customermanagement.management.mapper;
 
-import com.neu.customermanagement.management.dto.*;
 import com.neu.customermanagement.management.dto.common.DeptInfo;
 import com.neu.customermanagement.management.dto.common.EmpInfo;
 import com.neu.customermanagement.management.dto.common.Relation;
+import com.neu.customermanagement.management.dto.customer.CusSearchCondition;
+import com.neu.customermanagement.management.dto.customer.CusSearchResult;
 import com.neu.customermanagement.management.entity.Customer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

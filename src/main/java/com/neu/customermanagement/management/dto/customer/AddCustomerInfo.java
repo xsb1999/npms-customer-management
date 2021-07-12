@@ -1,4 +1,4 @@
-package com.neu.customermanagement.management.dto;
+package com.neu.customermanagement.management.dto.customer;
 
 import com.neu.customermanagement.management.dto.common.Relation;
 import com.neu.customermanagement.management.entity.Contact;
@@ -7,7 +7,8 @@ import com.neu.customermanagement.management.entity.Customer;
 import java.io.Serializable;
 import java.util.List;
 
-public class CusDetail implements Serializable {
+public class AddCustomerInfo implements Serializable {
+
     private Customer customer;
     private List<Contact> contactList;
     private List<Relation> relationList;
@@ -38,7 +39,7 @@ public class CusDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "CusDetail{" +
+        return "AddCustomerInfo{" +
                 "customer=" + customer +
                 ", contactList=" + contactList +
                 ", relationList=" + relationList +

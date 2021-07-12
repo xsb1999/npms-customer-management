@@ -1,4 +1,4 @@
-package com.neu.customermanagement.management.dto;
+package com.neu.customermanagement.management.dto.customer;
 
 import com.neu.customermanagement.management.dto.common.Relation;
 import com.neu.customermanagement.management.entity.Contact;

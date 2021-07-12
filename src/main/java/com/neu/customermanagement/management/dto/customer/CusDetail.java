@@ -1,13 +1,13 @@
-package com.neu.customermanagement.management.dto;
+package com.neu.customermanagement.management.dto.customer;
 
 import com.neu.customermanagement.management.dto.common.Relation;
 import com.neu.customermanagement.management.entity.Contact;
 import com.neu.customermanagement.management.entity.Customer;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AddCustomerInfo {
-
+public class CusDetail implements Serializable {
     private Customer customer;
     private List<Contact> contactList;
     private List<Relation> relationList;
@@ -38,7 +38,7 @@ public class AddCustomerInfo {
 
     @Override
     public String toString() {
-        return "AddCustomerInfo{" +
+        return "CusDetail{" +
                 "customer=" + customer +
                 ", contactList=" + contactList +
                 ", relationList=" + relationList +
