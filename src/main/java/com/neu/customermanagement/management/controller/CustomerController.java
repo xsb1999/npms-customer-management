@@ -57,15 +57,48 @@ public class CustomerController {
     // 客户新增
     @PostMapping("addCustomers")
     public String addCustomers(@RequestBody AddCustomerInfo addCustomerInfo){
-        return iCustomerService.addCustomers(addCustomerInfo);
+        String msg="";
+        try {
+            msg = iCustomerService.addCustomers(addCustomerInfo);
+        }
+        catch (Exception exception){
+            msg = "系统错误，请联系管理员...";
+            System.err.println(exception);
+        }
+        return msg;
     }
 
 
     // 客户修改
     @PostMapping("updateCustomers")
     public String updateCustomers(@RequestBody UpdateCustomerInfo updateCustomerInfo){
-        return iCustomerService.updateCustomers(updateCustomerInfo);
+        String msg="";
+        try {
+            msg = iCustomerService.updateCustomers(updateCustomerInfo);
+        }
+        catch (Exception exception){
+            msg = "系统错误，请联系管理员...";
+            System.err.println(exception);
+        }
+        return msg;
     }
+
+
+    // 冻结客户（点击"冻结"按钮）
+    @PostMapping("frozenCustomer")
+    public int frozenCustomer(@RequestBody Customer customer){
+        String cus_id = customer.getCusId();
+        String cus_status = customer.getCusStatus();
+        return iCustomerService.frozenCustomer(cus_id, cus_status);
+    }
+
+
+    // 关联客户列表中通过客户名称查询客户id
+    @GetMapping("getCustomerByName")
+    public List<Customer> getCustomerByName(String cus_name){
+        return iCustomerService.getCustomerByName(cus_name);
+    }
+
 
 
 

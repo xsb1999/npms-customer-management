@@ -35,9 +35,11 @@ public interface ICustomerService extends IService<Customer> {
     // 客户修改
     public String updateCustomers(UpdateCustomerInfo updateCustomerInfo);
 
+    // 冻结客户（点击"冻结"按钮）
+    public int frozenCustomer(String cus_id, String cus_status);
 
-
-
+    // 关联客户列表中通过客户名称查询客户id
+    public List<Customer> getCustomerByName (String cus_name);
 
 
 }

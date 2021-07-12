@@ -65,4 +65,9 @@ public interface CustomerMapper extends BaseMapper<Customer> {
     // 删除客户联系人（通过客户id和客户联系人姓名）
     public int deleteConByNameAndId(String cus_id, String con_name);
 
+    // 冻结客户（点击"冻结"按钮）
+    public int frozenCustomer(String cus_id, String cus_status);
+
+
+
 }

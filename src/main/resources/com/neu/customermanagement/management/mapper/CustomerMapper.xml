@@ -137,13 +137,32 @@
     </select>
 
 
+
     <delete id="deleteRelByIds" parameterType="String">
         delete from customer_related where cusrel_cus_id=#{id1} and cusrel_cus_related_cus_id=#{id2}
     </delete>
 
+
+
     <delete id="deleteConByNameAndId" parameterType="String">
         delete from contact where con_customer_id=#{cus_id} and con_name=#{con_name}
     </delete>
+
+
+
+    <update id="frozenCustomer" parameterType="String">
+        update customer
+        <set>
+            <if test="cus_status == '10'">cus_status = '20',</if>
+            <if test="cus_status == '20'">cus_status = '10'</if>
+        </set>
+        where cus_id = #{cus_id}
+    </update>
+
+
+
+
+
 
 
 </mapper>

@@ -216,12 +216,23 @@ class CustomerManagementApplicationTests {
     }
 
 
+    @Test
+    public void test23(){
+        System.out.println(customerMapper.frozenCustomer("800001","20"));
+    }
+
+    @Test
+    public void test24(){
+        System.out.println(iCustomerService.getCustomerByName("CBA"));
+    }
 
 
 
-
-
-
+    @Test
+    public void test25(){
+        int k = customerMapper.judgeMultiFather1("800009", "800002");
+        System.out.println(k);
+    }
 
 
 }

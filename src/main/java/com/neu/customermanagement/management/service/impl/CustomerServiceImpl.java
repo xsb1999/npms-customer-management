@@ -168,7 +168,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         Customer customer = addCustomerInfo.getCustomer();
         List<Contact> contactList = addCustomerInfo.getContactList();
         List<Relation> relationList = addCustomerInfo.getRelationList();
-
+        String msg = "客户新增成功！";
         // 判断纳税人识别号是否唯一
         if (customer.getCusTaxpayerId()!=null && customerMapper.judgeTaxId(customer.getCusTaxpayerId()) > 0){
             return "纳税人识别号重复！";
@@ -215,7 +215,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             throw e;
         }
         System.out.println("insert success!");
-        return "客户新增成功！";
+        return msg;
     }
 
 
@@ -228,7 +228,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         List<String> deleteContactsName = updateCustomerInfo.getDeleteContactsName();
         List<Relation> addRelationList = updateCustomerInfo.getAddRelationList();
         List<String> deleteRelationCusId = updateCustomerInfo.getDeleteRelationCusId();
-
+        String msg = "客户修改成功！";
         // 冻结状态不能修改和删除客户联系人信息
         if (!customer.getCusStatus().equals("10")){
             return "冻结状态不能修改和删除客户联系人信息!";
@@ -237,6 +237,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         // 删除关联客户
         for (String s : deleteRelationCusId) {
             customerMapper.deleteRelByIds(customer.getCusId(), s);
+        }
+
+        for (Relation relation : addRelationList) {
+            relation.setCusrelCusId(customer.getCusId());
         }
 
         // 判断关联客户是否只录入了当前客户的父节点，不可关联多级父节点
@@ -251,6 +255,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         }
         for (Relation rel : addRelationList) {
             int k = customerMapper.judgeMultiFather1(rel.getCusrelCusId(), rel.getCusrelCusRelatedCusId());
+            System.out.println("k= "+k);
             if (k > 0) {
                 // 关联客户关联了多级父节点，不进行insert操作
                 return "不允许关联多级父节点！";
@@ -276,7 +281,6 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             }
             // 新增关联客户
             for (Relation relation : addRelationList) {
-                relation.setCusrelCusId(customer.getCusId());
                 customerMapper.addCusRelated(relation);
             }
 
@@ -286,7 +290,20 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         }
 
         System.out.println("update success!");
-        return "客户修改成功！";
+        return msg;
+    }
+
+
+    @Override
+    public int frozenCustomer(String cus_id, String cus_status) {
+        return customerMapper.frozenCustomer(cus_id, cus_status);
+    }
+
+    @Override
+    public List<Customer> getCustomerByName(String cus_name) {
+        QueryWrapper<Customer> qw = Wrappers.query();
+        qw.eq("cus_name",cus_name);
+        return customerMapper.selectList(qw);
     }
 
 
