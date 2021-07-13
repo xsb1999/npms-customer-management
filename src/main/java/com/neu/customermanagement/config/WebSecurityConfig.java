@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 客户修改（权限：客户经理，销售总监，营销专员）
                 .antMatchers(HttpMethod.POST,"/management/customer/updateCustomers").hasAnyAuthority("30000010")
                 .antMatchers(HttpMethod.POST,"/management/customer/updateCustomers").hasAnyAuthority("30000030")
-                .antMatchers(HttpMethod.POST,"/management/customer/updateCustomers").hasAnyAuthority("20000020")
+//                .antMatchers(HttpMethod.POST,"/management/customer/updateCustomers").hasAnyAuthority("20000020")
                 // 客户冻结（权限：营销专员）
                 .antMatchers(HttpMethod.POST,"/management/customer/frozenCustomer").hasAnyAuthority("20000020")
                 // 导出客户信息（权限：营销副总，营销专员）
