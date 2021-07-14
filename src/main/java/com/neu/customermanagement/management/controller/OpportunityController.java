@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-07-12
  */
 @RestController
-@RequestMapping("/management/opportunity")
+@RequestMapping("/cusManagement/opportunity")
 public class OpportunityController {
 
 }

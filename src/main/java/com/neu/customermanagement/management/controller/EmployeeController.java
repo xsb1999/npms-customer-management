@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-07-08
  */
 @RestController
-@RequestMapping("/management/employee")
+@RequestMapping("/cusManagement/employee")
 public class EmployeeController {
 
 }

@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2021-07-12
  */
 @RestController
-@RequestMapping("/management/handoverlog")
+@RequestMapping("/cusManagement/handoverlog")
 public class HandoverlogController {
 
     @Autowired

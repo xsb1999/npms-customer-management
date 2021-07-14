@@ -24,21 +24,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // 客户新增（权限：客户经理，销售总监）
-                .antMatchers(HttpMethod.POST,"/management/customer/addCustomers").hasAnyAuthority("30000010")
-                .antMatchers(HttpMethod.POST,"/management/customer/addCustomers").hasAnyAuthority("30000030")
+                .antMatchers(HttpMethod.POST,"/cusManagement/customer/addCustomers").hasAnyAuthority("30000010")
+                .antMatchers(HttpMethod.POST,"/cusManagement/customer/addCustomers").hasAnyAuthority("30000030")
                 // 客户修改（权限：客户经理，销售总监，营销专员）
-                .antMatchers(HttpMethod.POST,"/management/customer/updateCustomers").hasAnyAuthority("30000010")
-                .antMatchers(HttpMethod.POST,"/management/customer/updateCustomers").hasAnyAuthority("30000030")
-//                .antMatchers(HttpMethod.POST,"/management/customer/updateCustomers").hasAnyAuthority("20000020")
+                .antMatchers(HttpMethod.POST,"/cusManagement/customer/updateCustomers").hasAnyAuthority("30000010")
+                .antMatchers(HttpMethod.POST,"/cusManagement/customer/updateCustomers").hasAnyAuthority("30000030")
+//                .antMatchers(HttpMethod.POST,"/cusmanagement/customer/updateCustomers").hasAnyAuthority("20000020")
                 // 客户冻结（权限：营销专员）
-                .antMatchers(HttpMethod.POST,"/management/customer/frozenCustomer").hasAnyAuthority("20000020")
+                .antMatchers(HttpMethod.POST,"/cusManagement/customer/frozenCustomer").hasAnyAuthority("20000020")
                 // 导出客户信息（权限：营销副总，营销专员）
-                .antMatchers(HttpMethod.GET,"/management/customer/export").hasAnyAuthority("20000010")
-                .antMatchers(HttpMethod.GET,"/management/customer/export").hasAnyAuthority("20000020")
+                .antMatchers(HttpMethod.GET,"/cusManagement/customer/export").hasAnyAuthority("20000010")
+                .antMatchers(HttpMethod.GET,"/cusManagement/customer/export").hasAnyAuthority("20000020")
 
                 // 客户移交（权限：营销专员）
-                .antMatchers(HttpMethod.GET,"/management/handoverlog/**").hasAnyAuthority("20000020")
-                .antMatchers(HttpMethod.POST,"/management/handoverlog/**").hasAnyAuthority("20000020")
+                .antMatchers(HttpMethod.GET,"/cusManagement/handoverlog/**").hasAnyAuthority("20000020")
+                .antMatchers(HttpMethod.POST,"/cusManagement/handoverlog/**").hasAnyAuthority("20000020")
 
 
                 .antMatchers(
@@ -53,9 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers("/users/usersinfo/login").permitAll()
+                .antMatchers("/cusManagement/login").permitAll()
                 .anyRequest().authenticated()
-                .and().logout().logoutUrl("/logout")
+                .and().logout().logoutUrl("/cusManagement/logout")
                 .and()
                 .csrf().disable();
         ;
@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     IEmployeeService iEmployeeService;
 
     public CustomJsonLoginFilter customJSONLoginFilter(){
-        CustomJsonLoginFilter customJsonLoginFilte=    new CustomJsonLoginFilter("/users/usersinfo/login",iEmployeeService);
+        CustomJsonLoginFilter customJsonLoginFilte=    new CustomJsonLoginFilter("/cusManagement/login",iEmployeeService);
         customJsonLoginFilte.setAuthenticationSuccessHandler(new MyAuthenticationSuccessHandler());
         customJsonLoginFilte.setAuthenticationFailureHandler(new MyAuthenticationFailureHandler());
         return customJsonLoginFilte;

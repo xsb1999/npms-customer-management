@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-07-12
  */
 @RestController
-@RequestMapping("/management/payer")
+@RequestMapping("/cusManagement/payer")
 public class PayerController {
 
 }

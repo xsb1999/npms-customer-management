@@ -21,7 +21,7 @@ import java.util.List;
  * @since 2021-07-07
  */
 @RestController
-@RequestMapping("/management/customer")
+@RequestMapping("/cusManagement/customer")
 public class CustomerController {
 
     @Autowired
