@@ -23,9 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                // 客户查询（权限：客户经理，销售总监）
-                .antMatchers(HttpMethod.GET,"/management/customer/getCustomers").hasAnyAuthority("30000010")
-                .antMatchers(HttpMethod.GET,"/management/customer/getCustomers").hasAnyAuthority("30000030")
                 // 客户新增（权限：客户经理，销售总监）
                 .antMatchers(HttpMethod.POST,"/management/customer/addCustomers").hasAnyAuthority("30000010")
                 .antMatchers(HttpMethod.POST,"/management/customer/addCustomers").hasAnyAuthority("30000030")

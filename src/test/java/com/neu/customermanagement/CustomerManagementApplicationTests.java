@@ -8,6 +8,7 @@ import com.neu.customermanagement.management.dto.common.DeptInfo;
 import com.neu.customermanagement.management.dto.common.EmpInfo;
 import com.neu.customermanagement.management.dto.common.Relation;
 import com.neu.customermanagement.management.dto.common.Role;
+import com.neu.customermanagement.management.dto.customer.CusSearchCondition;
 import com.neu.customermanagement.management.entity.Contact;
 import com.neu.customermanagement.management.entity.Customer;
 import com.neu.customermanagement.management.entity.Handoverlog;
@@ -256,6 +257,13 @@ class CustomerManagementApplicationTests {
         handoverlogMapper.insert(handoverlog);
     }
 
+
+    @Test
+    public void test28(){
+        CusSearchCondition cusSearchCondition = new CusSearchCondition();
+        cusSearchCondition.setCusName("Neu");
+        System.out.println(customerMapper.getCustomers(cusSearchCondition));
+    }
 
 
 

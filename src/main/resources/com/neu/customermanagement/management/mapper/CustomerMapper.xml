@@ -82,10 +82,10 @@
         from customer
         <where>
             <if test="cusId != null">
-                cus_id = #{cusId}
+                cus_id like "%"#{cusId}"%"
             </if>
             <if test="cusName != null">
-                and cus_name = #{cusName}
+                and cus_name like "%"#{cusName}"%"
             </if>
             <if test="cusEnterpriseProperty != null">
                 and cus_enterprise_property = #{cusEnterpriseProperty}
