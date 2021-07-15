@@ -111,6 +111,8 @@ public class HandoverlogServiceImpl extends ServiceImpl<HandoverlogMapper, Hando
                 // 修改该机会的客户经理id和部门id
                 opp.setOppSalesDept(handoverInfo.getInDeptId());
                 opp.setOppCustomerManagerId(handoverInfo.getInCusMgrId());
+                // 更新机会表
+                opportunityMapper.updateById(opp);
                 // 新增移交日志
                 Handoverlog handoverlog = new Handoverlog();
                 handoverlog.sethCusId(cus.getCusId());

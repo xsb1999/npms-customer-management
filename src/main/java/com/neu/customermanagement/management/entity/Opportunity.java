@@ -44,7 +44,6 @@ public class Opportunity implements Serializable {
 
     private String oppCusId;
 
-    private String oppApproveStatus;
 
 
     public String getOppId() {
@@ -151,31 +150,23 @@ public class Opportunity implements Serializable {
         this.oppCusId = oppCusId;
     }
 
-    public String getOppApproveStatus() {
-        return oppApproveStatus;
-    }
-
-    public void setOppApproveStatus(String oppApproveStatus) {
-        this.oppApproveStatus = oppApproveStatus;
-    }
 
     @Override
     public String toString() {
         return "Opportunity{" +
-        "oppId=" + oppId +
-        ", oppName=" + oppName +
-        ", oppSalesDept=" + oppSalesDept +
-        ", oppCustomerManagerId=" + oppCustomerManagerId +
-        ", oppSignTime=" + oppSignTime +
-        ", oppBelonging=" + oppBelonging +
-        ", oppStatus=" + oppStatus +
-        ", oppPhase=" + oppPhase +
-        ", oppType=" + oppType +
-        ", oppProduct=" + oppProduct +
-        ", oppBackground=" + oppBackground +
-        ", oppCigarettes=" + oppCigarettes +
-        ", oppCusId=" + oppCusId +
-        ", oppApproveStatus=" + oppApproveStatus +
-        "}";
+                "oppId='" + oppId + '\'' +
+                ", oppName='" + oppName + '\'' +
+                ", oppSalesDept='" + oppSalesDept + '\'' +
+                ", oppCustomerManagerId='" + oppCustomerManagerId + '\'' +
+                ", oppSignTime=" + oppSignTime +
+                ", oppBelonging='" + oppBelonging + '\'' +
+                ", oppStatus='" + oppStatus + '\'' +
+                ", oppPhase='" + oppPhase + '\'' +
+                ", oppType='" + oppType + '\'' +
+                ", oppProduct='" + oppProduct + '\'' +
+                ", oppBackground='" + oppBackground + '\'' +
+                ", oppCigarettes='" + oppCigarettes + '\'' +
+                ", oppCusId='" + oppCusId + '\'' +
+                '}';
     }
 }
