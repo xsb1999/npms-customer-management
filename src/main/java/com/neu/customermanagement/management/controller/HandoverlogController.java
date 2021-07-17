@@ -35,23 +35,21 @@ public class HandoverlogController {
     }
 
     // 查询移出方的客户信息
-    @GetMapping("searchOutCusInfo")
+    @PostMapping("searchOutCusInfo")
     public List<Customer> searchOutCusInfo(@RequestBody HandoverInfoSearch handoverInfoSearch){
         return iHandoverlogService.searchOutCusInfo(handoverInfoSearch);
     }
 
     // 点击机会id显示机会详细信息
     @GetMapping("showOppDetail")
-    public OppDetail showOppDetail(@RequestBody Opportunity opportunity){
-        String opp_id = opportunity.getOppId();
-        return iHandoverlogService.showOppDetail(opp_id);
+    public OppDetail showOppDetail(@RequestParam String oppId){
+        return iHandoverlogService.showOppDetail(oppId);
     }
 
     // 选择客户，展示对应的机会列表
     @GetMapping("getOppByCusId")
-    public List<Opportunity> getOppByCusId(@RequestBody Customer customer){
-        String cus_id = customer.getCusId();
-        return iHandoverlogService.getOppByCusId(cus_id);
+    public List<Opportunity> getOppByCusId(@RequestParam String cusId){
+        return iHandoverlogService.getOppByCusId(cusId);
     }
 
     // 客户移交

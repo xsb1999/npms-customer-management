@@ -29,27 +29,24 @@ public class CustomerController {
 
     // 初始化客户管理页面
     @GetMapping("getMainPage")
-    public CusManagePageInfo getMainPage(@RequestBody Employee employee){
-        String emp_id = employee.getEmpId();
-        String emp_position = employee.getEmpPositionId();
-        return iCustomerService.getCusManagePageInfo(emp_id,emp_position);
+    public CusManagePageInfo getMainPage(@RequestParam String empId, @RequestParam String empPositionId){
+        return iCustomerService.getCusManagePageInfo(empId,empPositionId);
     }
 
     // 销售部门和客户经理二级联动
     @GetMapping("getEmpByDept")
-    public List<EmpInfo> getEmpByDept(@RequestBody DeptInfo dept){
-        return iCustomerService.getEmpByDept(dept.getDeptId());
+    public List<EmpInfo> getEmpByDept(@RequestParam String deptId){
+        return iCustomerService.getEmpByDept(deptId);
     }
 
     // 点击客户编号展示客户详细信息
     @GetMapping("getCusDetail")
-    public CusDetail getCusDetail(@RequestBody Customer customer){
-        String cus_id = customer.getCusId();
-        return iCustomerService.getCusDetail(cus_id);
+    public CusDetail getCusDetail(@RequestParam String cusId){
+        return iCustomerService.getCusDetail(cusId);
     }
 
     // 客户查询
-    @GetMapping("getCustomers")
+    @PostMapping("getCustomers")
     public List<CusSearchResult> getCustomers(@RequestBody CusSearchCondition condition){
         return iCustomerService.getCustomers(condition);
     }
@@ -95,8 +92,8 @@ public class CustomerController {
 
     // 关联客户列表中通过客户名称查询客户id
     @GetMapping("getCustomerByName")
-    public List<Customer> getCustomerByName(String cus_name){
-        return iCustomerService.getCustomerByName(cus_name);
+    public List<Customer> getCustomerByName(@RequestParam String cusName){
+        return iCustomerService.getCustomerByName(cusName);
     }
 
 

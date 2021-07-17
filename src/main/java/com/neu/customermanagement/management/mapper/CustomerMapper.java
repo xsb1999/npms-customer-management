@@ -30,7 +30,7 @@ public interface CustomerMapper extends BaseMapper<Customer> {
     // 获取当前登录人的信息（根据员工id和部门id）
     public List<EmpInfo> getEmpInfoByEmpIdAndDeptId(String emp_id, String dept_id);
 
-    // 获取当前登录人的客户列表（如果是销售经理则返回该部门下的全部客户，若是总经理，则返回全部客户）
+    // 获取当前登录人的客户列表（若是总经理，则返回该部门下的全部客户）
     public List<CusSearchResult> getCusSearchResult(String emp_id, String dept_id);
 
     // 销售部门和客户经理二级联动
