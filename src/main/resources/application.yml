@@ -1,6 +1,9 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: provider-customer-management
+    name: provider-server-customer-management
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/npms?serverTimezone=UTC&characterEncoding=utf-8&useSSL=false&useUnicode=true&allowMultiQueries=true
@@ -21,3 +24,15 @@ mybatis-plus:
 logging:
   level:
     com.neu.customermanagement: debug
+
+
+eureka:
+  instance:
+    #使用ip地址向Eureka注册
+    prefer-ip-address: true
+    #上面的配置已经可以使用ip注册了，但显示的还是主机名，所以这里设置显示的注册名
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://eurekaServer13000:13000/eureka/, http://eurekaServer13001:13001/eureka/, http://eurekaServer13002:13002/eureka/
+
