@@ -14,6 +14,8 @@ import com.neu.customermanagement.management.mapper.EmployeeMapper;
 import com.neu.customermanagement.management.service.ICustomerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     EmployeeMapper employeeMapper;
     @Autowired
     ContactMapper contactMapper;
+
 
     @Override
     public CusManagePageInfo getCusManagePageInfo(String emp_id, String emp_position) {
@@ -108,11 +111,14 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         return cusManagePageInfo;
     }
 
+
+    @Cacheable(cacheNames="cus_getEmpByDept")
     @Override
     public List<EmpInfo> getEmpByDept(String dept_id) {
 
         return customerMapper.getEmpByDept(dept_id);
     }
+
 
     @Override
     public CusDetail getCusDetail(String cus_id) {
@@ -144,6 +150,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
         return cusDetail;
     }
+
 
     @Override
     public List<CusSearchResult> getCustomers(CusSearchCondition searchCondition) {
