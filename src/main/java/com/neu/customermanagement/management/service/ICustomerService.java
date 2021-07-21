@@ -18,7 +18,7 @@ import java.util.List;
 public interface ICustomerService extends IService<Customer> {
 
     // 初始化客户管理页面
-    public CusManagePageInfo getCusManagePageInfo(String emp_id, String emp_position);
+    public CusManagePageInfo getCusManagePageInfo(String emp_id);
 
     // 销售部门和客户经理二级联动
     public List<EmpInfo> getEmpByDept(String dept_id);

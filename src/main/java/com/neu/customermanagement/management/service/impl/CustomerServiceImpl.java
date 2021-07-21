@@ -8,6 +8,7 @@ import com.neu.customermanagement.management.dto.common.Relation;
 import com.neu.customermanagement.management.dto.customer.*;
 import com.neu.customermanagement.management.entity.Contact;
 import com.neu.customermanagement.management.entity.Customer;
+import com.neu.customermanagement.management.entity.Employee;
 import com.neu.customermanagement.management.mapper.ContactMapper;
 import com.neu.customermanagement.management.mapper.CustomerMapper;
 import com.neu.customermanagement.management.mapper.EmployeeMapper;
@@ -42,7 +43,11 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
 
     @Override
-    public CusManagePageInfo getCusManagePageInfo(String emp_id, String emp_position) {
+    public CusManagePageInfo getCusManagePageInfo(String emp_id) {
+        // 根据员工id获取员工职位
+        Employee employee = employeeMapper.selectById(emp_id);
+        String emp_position = employee.getEmpPositionId();
+
         List<DeptInfo> deptInfoList = new ArrayList<>();
         List<EmpInfo> empInfoList = new ArrayList<>();
         List<CusSearchResult> cusSearchResultList = new ArrayList<>();

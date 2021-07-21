@@ -88,7 +88,7 @@ class CustomerManagementApplicationTests {
 
     @Test
     public void test6(){
-        CusManagePageInfo cusManagePageInfo = iCustomerService.getCusManagePageInfo("800125", "30000010");
+        CusManagePageInfo cusManagePageInfo = iCustomerService.getCusManagePageInfo("800125");
         System.out.println(cusManagePageInfo);
     }
 
@@ -128,7 +128,7 @@ class CustomerManagementApplicationTests {
 
     @Test
     public void test13(){
-        System.out.println(iCustomerService.getCusManagePageInfo("800125","30000010"));
+        System.out.println(iCustomerService.getCusManagePageInfo("800125"));
     }
 
 

@@ -30,8 +30,8 @@ public class CustomerController {
 
     // 初始化客户管理页面
     @GetMapping("getMainPage")
-    public CusManagePageInfo getMainPage(@RequestParam String empId, @RequestParam String empPositionId){
-        return iCustomerService.getCusManagePageInfo(empId,empPositionId);
+    public CusManagePageInfo getMainPage(@RequestParam String empId){
+        return iCustomerService.getCusManagePageInfo(empId);
     }
 
     // 销售部门和客户经理二级联动
