@@ -206,6 +206,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             }
         }
 
+        customer.setCusStatus("10");
         // 各项信息填写正确，进行insert操作
         try {
             // insert到客户表
@@ -237,6 +238,11 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         List<Relation> addRelationList = updateCustomerInfo.getAddRelationList();
         List<String> deleteRelationCusId = updateCustomerInfo.getDeleteRelationCusId();
         String msg = "客户修改成功！";
+
+        // 通过客户经理id获取部门id
+        Employee emp = employeeMapper.selectById(customer.getCusCustomerManagerId());
+        customer.setCusSalesDeptId(emp.getEmpDeptId());
+
         // 冻结状态不能修改和删除客户联系人信息
         if (!customer.getCusStatus().equals("10")){
             return "冻结状态不能修改和删除客户联系人信息!";

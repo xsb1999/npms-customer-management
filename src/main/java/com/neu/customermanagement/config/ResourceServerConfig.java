@@ -41,6 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 // 导出客户信息（权限：营销副总，营销专员）
                 .antMatchers(HttpMethod.GET,"/cusManagement/customer/export").hasAnyRole("20000010","20000020")
                 // 客户移交（权限：营销专员）
+                .antMatchers(HttpMethod.GET,"/cusManagement/handoverlog/**").hasRole("20000020")
                 .antMatchers(HttpMethod.POST,"/cusManagement/handoverlog/**").hasRole("20000020")
                 .anyRequest().authenticated();
     }
