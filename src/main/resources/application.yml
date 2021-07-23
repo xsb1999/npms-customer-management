@@ -1,4 +1,4 @@
-server:
+﻿server:
   port: 8080
 
 spring:
@@ -8,12 +8,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/npms?serverTimezone=UTC&characterEncoding=utf-8&useSSL=false&useUnicode=true&allowMultiQueries=true
     username: root
-    password: xsb19991109
+    password: 
   redis:
     port: 6379
     host: 8.142.36.52
     database: 0
-    password: YangYouCai4YangYi!
+    password: 
 
 
 mybatis-plus:
@@ -34,5 +34,5 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
   client:
     service-url:
-      defaultZone: http://eurekaServer13000:13000/eureka/, http://eurekaServer13001:13001/eureka/, http://eurekaServer13002:13002/eureka/
+      defaultZone: http://127.0.0.1:13000/eureka/, http://127.0.0.1:13001/eureka/, http://127.0.0.1:13002/eureka/
 
